@@ -130,6 +130,15 @@ AddEventHandler('fuel:startFuelUpTick', function(pumpObject, ped, vehicle)
 		currentCost = currentCost + extraCost
 
 		if currentCash >= currentCost then
+
+			local loop = 0
+			while loop < 500 and not NetworkHasControlOfEntity(vehicle) do
+				NetworkRequestControlOfEntity(vehicle)
+
+				loop = loop + 1
+				Citizen.Wait(1)
+			end
+
 			SetFuel(vehicle, currentFuel)
 		else
 			isFueling = false
