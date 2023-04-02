@@ -26,7 +26,10 @@ function ManageFuelUsage(vehicle)
 	end
 
 	if IsVehicleEngineOn(vehicle) then
-		SetFuel(vehicle, GetFuel(vehicle) - (Config.FuelUsageOverall or 1.0) * Config.FuelUsage[Round(GetVehicleCurrentRpm(vehicle), 1)] * (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 20)
+		local petrolVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fPetrolTankVolume')
+		--local enginePower = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fInitialDriveForce')
+		
+		SetFuel(vehicle, GetFuel(vehicle) - (Config.FuelUsage or 1.0) * GetVehicleCurrentRpm(vehicle) * lerp(0.1, 1.0, GetVehicleThrottleOffset(vehicle)) * 5 / petrolVolume)
 	end
 end
 
@@ -90,13 +93,14 @@ end)
 
 AddEventHandler('fuel:startFuelUpTick', function(pumpObject, ped, vehicle)
 	currentFuel = GetFuel(vehicle)
+	local petrolVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fPetrolTankVolume')
 
 	while isFueling do
 		Citizen.Wait(500)
 
 		local oldFuel = DecorGetFloat(vehicle, Config.FuelDecor)
-		local fuelToAdd = math.random(18, 20) * Config.RefuelRate / 10.0
-		local extraCost = fuelToAdd / 1.5 * Config.CostMultiplier
+		local fuelToAdd = math.random(18, 20) * Config.RefuelRate * 5 / petrolVolume
+		local extraCost = fuelToAdd / 1.5 * Config.CostMultiplier * petrolVolume / 5
 
 		if not pumpObject then
 			if Config.UnlimitedJerryCan then
@@ -105,7 +109,7 @@ AddEventHandler('fuel:startFuelUpTick', function(pumpObject, ped, vehicle)
 			elseif GetAmmoInPedWeapon(ped, 883325847) - fuelToAdd * 100 >= 0 then
 				currentFuel = oldFuel + fuelToAdd
 
-				SetPedAmmo(ped, 883325847, math.floor(GetAmmoInPedWeapon(ped, 883325847) - fuelToAdd * 100))
+				SetPedAmmo(ped, 883325847, math.floor(GetAmmoInPedWeapon(ped, 883325847) - fuelToAdd * 12 * petrolVolume / 5))
 			else
 				isFueling = false
 			end

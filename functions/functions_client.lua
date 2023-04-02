@@ -95,3 +95,7 @@ function TableContains(table, item)
 	end
 	return false
 end
+
+function lerp(a, b, v)
+	return a + (b - a) * v
+end
