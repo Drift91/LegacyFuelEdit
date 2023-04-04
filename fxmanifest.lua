@@ -23,3 +23,4 @@ exports {
 }
 
 provide 'LegacyFuel'
+lua54 'yes'
