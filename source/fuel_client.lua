@@ -440,6 +440,6 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		Citizen.Wait(0)
+		Citizen.Wait(1000)
 	end
 end)
