@@ -41,7 +41,7 @@ function Round(num, numDecimalPlaces)
 end
 
 function CreateBlip(coords)
-	local blip = AddBlipForCoord(coords)
+	local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
 
 	SetBlipSprite(blip, 361)
 	SetBlipScale(blip, 0.9)
@@ -76,7 +76,7 @@ function FindNearestFuelPump()
 	local pumpDistance = 1000
 
 	for _, fuelPumpObject in pairs(fuelPumps) do
-		local dstcheck = GetDistanceBetweenCoords(coords, GetEntityCoords(fuelPumpObject))
+		local dstcheck = #(coords - GetEntityCoords(fuelPumpObject))
 
 		if dstcheck < pumpDistance then
 			pumpDistance = dstcheck
