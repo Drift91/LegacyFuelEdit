@@ -2,8 +2,8 @@ fx_version 'cerulean'
 game 'gta5'
 
 author 'InZidiuZ & Drift_91'
-description 'Legacy Fuel Edit'
-version '2.0'
+description "Drift_91's personal fork of Legacy Fuel."
+version '2.1'
 
 -- What to run
 client_scripts {
@@ -23,4 +23,6 @@ exports {
 }
 
 provide 'LegacyFuel'
+
 lua54 'yes'
+use_experimental_fxv2_oal 'yes'
