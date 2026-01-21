@@ -61,13 +61,13 @@ if not Config.UseESX then
 end
 
 Config.PumpModels = {
-	[-2007231801] = true,
-	[1339433404] = true,
-	[1694452750] = true,
-	[1933174915] = true,
-	[-462817101] = true,
-	[-469694731] = true,
-	[-164877493] = true
+	[`prop_gas_pump_1d`] = true,
+	[`prop_gas_pump_1a`] = true,
+	[`prop_gas_pump_1b`] = true,
+	[`prop_gas_pump_1c`] = true,
+	[`prop_vintage_pump`] = true,
+	[`prop_gas_pump_old2`] = true,
+	[`prop_gas_pump_old3`] = true
 }
 
 -- Blacklist certain vehicles. Use names only. Be sure to use ` backticks and not quotes. https://wiki.gtanet.work/index.php?title=Vehicle_Models
