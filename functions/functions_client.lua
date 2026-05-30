@@ -99,3 +99,18 @@ end
 function lerp(a, b, v)
 	return a + (b - a) * v
 end
+
+-- https://docs.fivem.net/docs/cookbook/2019/08/12/useful-snippet-getting-the-top-left-of-the-minimap-in-screen-coordinates/
+function getMinimapTop()
+	SetScriptGfxAlign(string.byte('L'), string.byte('B'))
+	local topLeftX, topLeftY = GetScriptGfxPosition(-0.0045, 0.002 + (-0.188888))
+	ResetScriptGfxAlign()
+	local topRightX, topRightY = topLeftX + 0.150, topLeftY
+
+	return {topLeftX, topLeftY, topRightX, topRightY}
+end
+
+tweenObj = {v = 0.0}
+function tween(t)
+	tweenHandle = _flux.to(t, 0.5, { v = 1.0 }):ease('quartout'):after(0.5, { v = 0.0 }):ease('quartout'):oncomplete(function() tween(t); Wait(0) end)
+end

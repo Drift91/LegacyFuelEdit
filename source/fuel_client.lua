@@ -405,6 +405,8 @@ if Config.EnableHUD then
 	end)
 
 	Citizen.CreateThread(function()
+
+		local tweening = false;
 		while true do
 			if displayHud then
 				
@@ -413,10 +415,57 @@ if Config.EnableHUD then
 					DrawAdvancedText(0.174 - Config.HUDx, 0.77 - Config.HUDy, 0.005, 0.0028, 0.6, kmh, Config.ColorHUD.r, Config.ColorHUD.g, Config.ColorHUD.b, Config.ColorHUD.a, 6, 1)
 					DrawAdvancedText(0.148 - Config.HUDx, 0.7765 - Config.HUDy, 0.005, 0.0028, 0.4, "mp/h              km/h", Config.ColorHUD.r, Config.ColorHUD.g, Config.ColorHUD.b, Config.ColorHUD.a, 6, 1)
 				end
-
-				DrawAdvancedText(0.2195 - Config.HUDx, 0.77 - Config.HUDy, 0.005, 0.0028, 0.6, fuel, color.r, color.g, color.b, color.a, 6, 1)
-				DrawAdvancedText(0.2397 - Config.HUDx, 0.7766 - Config.HUDy, 0.005, 0.0028, 0.4, "Fuel", color.r, color.g, color.b, color.a, 6, 1)
 				
+				-- New experimental fuel bar
+				if Config.EnableBar then
+					local topLeftX, topLeftY, topRightX, topRightY = table.unpack(getMinimapTop())
+					
+					if IsRadarHidden() then
+						topLeftX, topLeftY, topRightX, topRightY = topLeftX+0.005, 0.955, topRightX-0.005, 0.955
+					else
+						topLeftX, topLeftY, topRightX, topRightY = topLeftX+0.005, topLeftY-0.005, topRightX-0.005, topRightY-0.005
+					end
+					
+					local fuel = GetFuel(GetVehiclePedIsIn(PlayerPedId()))
+					
+					local width = topRightX - topLeftX
+					local centerX = topLeftX + (width / 2)
+					local centerY = topLeftY + 0.008
+					local fill = width * (fuel / 100)
+					local centerFill = topLeftX + (fill / 2)
+					
+					-- Draw background shadow
+					DrawRect(centerX,centerY, width,0.016, 0,0,0, 100)
+					
+					local colors
+					if fuel < Config.LowFuelLevel then
+						if not tweening then
+							Citizen.CreateThread(function()
+								tween(tweenObj)
+								tweening = true
+							end)
+						end
+						
+						colors = {
+							r = lerp(Config.ColorBarLow1.r, Config.ColorBarLow2.r, tweenObj.v),
+							g = lerp(Config.ColorBarLow1.g, Config.ColorBarLow2.g, tweenObj.v),
+							b = lerp(Config.ColorBarLow1.b, Config.ColorBarLow2.b, tweenObj.v),
+						}
+					else
+						if tweening then
+							tweenHandle:stop()
+							tweening = false
+						end
+						colors = {r = Config.ColorBar.r, g = Config.ColorBar.g, b = Config.ColorBar.b}
+					end
+					
+					-- Draw fuel bar
+					DrawRect(centerFill,centerY, fill,0.008, colors.r,colors.g,colors.b, 150)
+				else
+					
+					DrawAdvancedText(0.2195 - Config.HUDx, 0.77 - Config.HUDy, 0.005, 0.0028, 0.6, fuel, color.r, color.g, color.b, color.a, 6, 1)
+					DrawAdvancedText(0.2397 - Config.HUDx, 0.7766 - Config.HUDy, 0.005, 0.0028, 0.4, "Fuel", color.r, color.g, color.b, color.a, 6, 1)
+				end
 			else
 				Citizen.Wait(750)
 			end

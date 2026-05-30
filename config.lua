@@ -16,6 +16,9 @@ Config.DisableKeys = {0, 22, 23, 24, 29, 30, 31, 37, 44, 56, 82, 140, 166, 167, 
 -- Want to use the HUD? Turn this to true.
 Config.EnableHUD = true
 
+-- Want to use the new bar HUD? Turn this to true.
+Config.EnableBar = false
+
 -- Want the HUD to show your speed? Turn this to true.
 Config.EnableSpeedHUD = true
 
@@ -27,6 +30,13 @@ Config.ColorHUD = {r = 255, g = 255, b = 255, a = 255}
 
 -- Set the color of the fuel section of the hud when you're low on fuel.
 Config.ColorLowFuel = {r = 255, g = 50, b = 50, a = 255}
+
+-- Set the color of the bar HUD
+Config.ColorBar = {r = 255, g = 179, b = 0}
+
+-- Set the colors of the bar HUD when low on fuel
+Config.ColorBarLow1 = {r = 255, g = 0, b = 0}
+Config.ColorBarLow2 = {r = 255, g = 255, b = 255}
 
 -- Use this to adjust the position of the HUD.
 Config.HUDx = 0.01135
