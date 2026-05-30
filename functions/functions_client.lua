@@ -111,5 +111,8 @@ function getMinimapTop()
 end
 
 function tween(t)
-	tweenHandle = _flux.to(t, 0.5, { v = 1.0 }):ease('quartout'):after(0.5, { v = 0.0 }):ease('quartout'):oncomplete(function() tween(t); Wait(0) end)
+	local handle1 = _flux.to(t, 0.5, { v = 1.0 }):ease('quartout')
+	local handle2 = handle1:after(0.5, { v = 0.0 }):ease('quartout')
+	handle2:oncomplete(function() tween(t); Wait(0) end)
+	tweens = {handle1, handle2}
 end

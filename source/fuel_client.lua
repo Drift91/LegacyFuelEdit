@@ -440,10 +440,9 @@ if Config.EnableHUD then
 					local colors
 					if fuel < Config.LowFuelLevel then
 						if not tweening then
-							Citizen.CreateThread(function()
-								tween(tweenObj)
-								tweening = true
-							end)
+							tweenObj.v = 0
+							tween(tweenObj)
+							tweening = true
 						end
 						
 						colors = {
@@ -453,7 +452,10 @@ if Config.EnableHUD then
 						}
 					else
 						if tweening then
-							tweenHandle:stop()
+							for k,v in ipairs(tweens) do
+								v:stop()
+							end
+							tweenObj.v = 0
 							tweening = false
 						end
 						colors = {r = Config.ColorBar.r, g = Config.ColorBar.g, b = Config.ColorBar.b}
