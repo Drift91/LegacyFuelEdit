@@ -15,6 +15,8 @@ local currentCost = 0.0
 local currentCash = 1000
 local fuelSynced = false
 local inBlacklisted = false
+local tweening = false
+local tweenObj = {v = 0.0}
 
 function ManageFuelUsage(vehicle)
 	if not DecorExistOn(vehicle, Config.FuelDecor) then
@@ -405,8 +407,6 @@ if Config.EnableHUD then
 	end)
 
 	Citizen.CreateThread(function()
-
-		local tweening = false;
 		while true do
 			if displayHud then
 				

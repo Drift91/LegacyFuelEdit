@@ -110,7 +110,6 @@ function getMinimapTop()
 	return {topLeftX, topLeftY, topRightX, topRightY}
 end
 
-tweenObj = {v = 0.0}
 function tween(t)
 	tweenHandle = _flux.to(t, 0.5, { v = 1.0 }):ease('quartout'):after(0.5, { v = 0.0 }):ease('quartout'):oncomplete(function() tween(t); Wait(0) end)
 end
