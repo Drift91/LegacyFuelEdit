@@ -1,0 +1,22 @@
+
+.shadow {
+	bottom: 0px;
+	left: 0px;
+	width: 0px;
+	height: 16px;
+	position: absolute;
+	z-index: 500;
+	overflow: shown;
+	color: rgba(0,0,0, 0.7);
+}
+
+.bar {
+	bottom: 0px;
+	left: 0px;
+	width: 0px;
+	height: 12px;
+	position: absolute;
+	color: rgba(223,207,32, 1);
+	z-index: 1000;
+	overflow: shown;
+}

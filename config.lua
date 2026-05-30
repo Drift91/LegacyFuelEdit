@@ -16,6 +16,9 @@ Config.DisableKeys = {0, 22, 23, 24, 29, 30, 31, 37, 44, 56, 82, 140, 166, 167, 
 -- Want to use the HUD? Turn this to true.
 Config.EnableHUD = true
 
+-- Want to use the new bar HUD instead? Turn this to true.
+Config.EnableBar = false
+
 -- Want the HUD to show your speed? Turn this to true.
 Config.EnableSpeedHUD = true
 

@@ -22,6 +22,13 @@ exports {
 	'SetFuel'
 }
 
+files {
+    'ui/ui.html',
+    'ui/ui.js',
+    'ui/ui.css'
+}
+ui_page 'ui/ui.html'
+
 provide 'LegacyFuel'
 
 lua54 'yes'

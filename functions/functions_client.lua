@@ -99,3 +99,14 @@ end
 function lerp(a, b, v)
 	return a + (b - a) * v
 end
+
+function getMinimapTop()
+	SetScriptGfxAlign(string.byte('L'), string.byte('B'))
+	local topLeftX, topLeftY = GetScriptGfxPosition(-0.0045, 0.002 + (-0.188888))
+	local topRightX, topRightY = GetScriptGfxPosition(-0.0045, 0.002)
+	ResetScriptGfxAlign()
+
+	local w, h = GetActiveScreenResolution()
+
+	return {w * topLeftX, h * topLeftY, h * topRightX, h * topRightY}
+end

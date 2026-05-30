@@ -413,18 +413,35 @@ if Config.EnableHUD then
 					DrawAdvancedText(0.174 - Config.HUDx, 0.77 - Config.HUDy, 0.005, 0.0028, 0.6, kmh, Config.ColorHUD.r, Config.ColorHUD.g, Config.ColorHUD.b, Config.ColorHUD.a, 6, 1)
 					DrawAdvancedText(0.148 - Config.HUDx, 0.7765 - Config.HUDy, 0.005, 0.0028, 0.4, "mp/h              km/h", Config.ColorHUD.r, Config.ColorHUD.g, Config.ColorHUD.b, Config.ColorHUD.a, 6, 1)
 				end
-
-				DrawAdvancedText(0.2195 - Config.HUDx, 0.77 - Config.HUDy, 0.005, 0.0028, 0.6, fuel, color.r, color.g, color.b, color.a, 6, 1)
-				DrawAdvancedText(0.2397 - Config.HUDx, 0.7766 - Config.HUDy, 0.005, 0.0028, 0.4, "Fuel", color.r, color.g, color.b, color.a, 6, 1)
+				
+				if Config.EnableBar then
+					local topLeftX, topLeftY, topRightX, topRightY = table.unpack(getMinimapTop())
+					
+					SendNUIMessage({
+						action = 'display',
+						bottom = topLeftY,
+						left = topLeftX,
+						width = topRightX,
+						fuel = fuel
+					})
+					
+					Citizen.Wait(250)
+				else
+					DrawAdvancedText(0.2195 - Config.HUDx, 0.77 - Config.HUDy, 0.005, 0.0028, 0.6, fuel, color.r, color.g, color.b, color.a, 6, 1)
+					DrawAdvancedText(0.2397 - Config.HUDx, 0.7766 - Config.HUDy, 0.005, 0.0028, 0.4, "Fuel", color.r, color.g, color.b, color.a, 6, 1)
+				end
 				
 			else
+				SendNUIMessage({action = 'hide'})
 				Citizen.Wait(750)
 			end
 
 			Citizen.Wait(0)
 		end
 	end)
+
 end
+
 
 Citizen.CreateThread(function()
 	while true do
