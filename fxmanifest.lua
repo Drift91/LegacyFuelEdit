@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'InZidiuZ & Drift_91'
 description "Drift_91's personal fork of Legacy Fuel."
-version '2.2'
+version '2.3'
 
 -- What to run
 client_scripts {
