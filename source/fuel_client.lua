@@ -31,7 +31,12 @@ function ManageFuelUsage(vehicle)
 		local petrolVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fPetrolTankVolume')
 		--local enginePower = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fInitialDriveForce')
 		
-		SetFuel(vehicle, GetFuel(vehicle) - (Config.FuelUsage or 1.0) * GetVehicleCurrentRpm(vehicle) * lerp(0.1, 1.0, GetVehicleThrottleOffset(vehicle)) * 5 / petrolVolume)
+		local fuel = (GetFuel(vehicle) - (Config.FuelUsage or 1.0) * GetVehicleCurrentRpm(vehicle) * lerp(0.1, 1.0, GetVehicleThrottleOffset(vehicle)) * 5 / petrolVolume)
+		SetFuel(vehicle, fuel)
+		
+		if fuel <= 0.0 then
+			SetVehicleEngineOn(vehicle, false, false, true)
+		end
 	end
 end
 
@@ -476,21 +481,3 @@ if Config.EnableHUD then
 		end
 	end)
 end
-
-Citizen.CreateThread(function()
-	while true do
-
-		local ped = PlayerPedId()
-		if IsPedInAnyVehicle(ped) then
-
-			local vehicle = GetVehiclePedIsIn(ped)
-			if GetPedInVehicleSeat(vehicle, -1) == ped then
-
-				if GetFuel(vehicle) == 0.0 and DecorExistOn(vehicle, Config.FuelDecor) and GetIsVehicleEngineRunning(vehicle) then
-					SetVehicleEngineOn(vehicle, false, false, true)
-				end
-			end
-		end
-		Citizen.Wait(1000)
-	end
-end)
