@@ -51,7 +51,9 @@ Citizen.CreateThread(function()
 		if IsPedInAnyVehicle(ped) then
 			local vehicle = GetVehiclePedIsIn(ped)
 
-			if TableContains(Config.Blacklist, GetEntityModel(vehicle)) or TableContains(Config.ClassBlacklist, GetVehicleClass(vehicle)) then
+			local inTable = TableContains(Config.Blacklist, GetEntityModel(vehicle)) or TableContains(Config.ClassBlacklist, GetVehicleClass(vehicle))
+			local petrolVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fPetrolTankVolume')
+			if inTable or petrolVolume <= 0.0 then
 				inBlacklisted = true
 			else
 				inBlacklisted = false
